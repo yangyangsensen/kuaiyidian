@@ -1,0 +1,162 @@
+ 
+<script src="/javascripts/jquery-2.1.4.min.js"></script>
+<script src="/javascripts/jquery.rotate.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/stylesheets/buttoncss.css" media="screen" />
+<script>
+	window.onload=function (e){
+		  
+	$(document).ready(function(){  
+	    var hr=$("#hr");
+	    var hr2=$("#hr2");
+	    hr.animate({width:'1080px',opacity:'0.4'},"slow");
+	    hr2.animate({width:'1080px',opacity:'0.4'},"slow");
+	     $("#div1").fadeIn(2000);
+	      $("#body").slideToggle("slow");
+	 });
+	 var angle = 0;
+                setInterval(function() {
+                    angle += 3;
+                    $("#img3").rotate(angle);
+                }, 50);
+
+
+	}
+//	$(document).ready(function(){  
+//		 $("#div1").click(function(){
+//	       $("#body").slideToggle("slow");
+//	     });
+//	 });
+   function userlize(thisa){
+		$.get('/users/person',function(rhtml){
+			head.innerHTML = "<p style='float:left'>"+thisa+"</p>" ;
+            $('#main').html(rhtml);
+		});
+	}
+   function menulize(thisa){
+		$.get('/users/menu',function(rhtml){
+			head.innerHTML = "<p style='float:left'>"+thisa+"</p>" ;
+            $('#main').html(rhtml);
+		});
+	}
+</script>
+<style>
+body{
+	background: url(/images/bg.jpg);
+}
+
+ .row{
+ 	 	position: absolute;
+ 	    top: 40px;
+ }
+ #div1{
+ 	z-index: 9999;
+ 	height: 80px;
+ 	width: 80px;
+ 	background: url(/images/touxiang.png);
+ 	background-size: cover;
+ 	display: none;
+ 	position: relative;
+ 	border-radius: 50%;
+ 	overflow: hidden;
+ 	cursor: pointer;
+
+ }
+ #div1:hover{
+ 	  -webkit-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	  -moz-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	  box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+ }
+ #div2{
+ 	height: 480px;
+ 	width: 400px;
+ 	background: #ffffff;
+ 	margin-top: 0px;
+ 	display: none;
+ 	border-radius: 3px;
+ 	-webkit-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+    -moz-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+    box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+ }
+#body{
+	width: 1100px;
+	height: 450px;
+	background: #FFFFFF;
+	display: none;
+}
+.lift{
+	margin-left: 5px;
+	width: 200px;
+	height: 100%;
+	float: left;
+}
+.right{
+	width: 880px;
+	height: 100%;
+	float: left;
+}
+ a{background-color:transparent;
+    text-decoration:none;
+  }
+   
+  a:active,a:hover{outline:0}
+  .list-group-item{position:relative;display:block;padding:10px 15px;margin-bottom:-1px;background-color:#fff;border:1px solid #ddd ; text-align:center;font-size: 14px;}
+   .list-group-item:first-child{border-top-left-radius:4px;border-top-right-radius:4px;background:#337ab7;color:#ffffff;margin-top: 3px;}
+   .list-group-item:last-child{margin-bottom:0;border-bottom-right-radius:4px;border-bottom-left-radius:4px;}
+   .list-group-item-heading{color:#333}
+   a.list-group-item{color:#555}
+   a.list-group-item .list-group-item-heading,button.list-group-item .list-group-item-heading{color:#333}
+   a.bodya:focus,a.bodya:hover,button.bodya:focus,button.bodya:hover{color:#555;text-decoration:none;background-color:#f5f5f5}
+   .zhuxiao:hover{
+   	color:#555;
+   	text-decoration:none;
+   	background-color:#d9534f;
+   	color:#ffffff;
+   }
+</style>
+
+
+<hr id='hr' width="100px"  style="height:3px;border:none;border-top:3px groove skyblue;margin-top: 80px;" />
+<div class="row" style="width: 100%;" align="center">
+<div id="div1"></div>
+
+</div>
+<div align="center" style="width: 100%; ">
+		<div id="div2" style="text-align: center;">
+			<div style="height: 30px;"></div>
+			
+			<% rs.forEach(function(row){ %>
+			商店名：<%-row.shopname %>
+		    <% }) %>
+		   <input type="submit" class="btn btn-primary" value='修改' style="width: 80%;margin-top: 15px; background-color: #0386cf; border: 0px;height: 40px;"/>
+		</div>
+</div>
+<div align="center" >
+	<div id="body" style="border-radius: 5px;">
+		<div class="lift">
+			<a href="#" class="list-group-item active">
+				商店管理
+			</a>
+			
+			<a href="#" class="list-group-item bodya" onclick="userlize('店员列表')">店员列表</a>
+			<a href="#" class="list-group-item bodya" onclick="menulize('菜单管理')">菜单管理</a>
+			<a href="#" class="list-group-item bodya" >功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="#" class="list-group-item bodya">功能栏</a>
+			<a href="/admin/logout" class="zhuxiao list-group-item" >注销</a>
+		</div>
+		<div class="right"  >
+            <div style="height: 35px; color:#337ab7;margin-left: 20px;" id="head">
+            	
+            </div>
+			<div id="main" style=" height: 90%;" >
+            
+		    </div>
+	    </div>
+  </div>
+</div>
+<hr id='hr2' width="100px"  style="height:3px;border:none;border-top:3px groove skyblue;margin-top: 10px;" />

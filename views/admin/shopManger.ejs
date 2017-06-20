@@ -1,0 +1,138 @@
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0"/>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.3&key=ebb3310e602e7027987911af5e30be56"></script>
+<style>
+	#myform input{
+		margin-top:6px;
+	}
+	#myform textarea{
+		margin-top:6px;
+	}
+	#myform label{
+		margin-top:6px;
+	}
+	#myform select{
+		margin-top:6px;
+	}
+</style>
+<script>
+function onSubPub(){
+	if(pubform.shopname.value==''){
+		alert('营业点名称不允许空');
+		pubform.shopname.focus();
+		return false;
+	}
+	if(pubform.shopintr.value==''){
+		alert('营业点简介不允许空');
+		pubform.shopintr.focus();
+		return false;
+	}
+	if(pubform.shoptype.value==0){
+		alert('请选择营业类别');
+		pubform.shoptype.focus();
+		return false;
+	}
+
+	return true;
+}
+function shownewshop(){
+    $('#myform').show();
+}
+</script>
+<input type='button'   value='创建新商家' onclick="shownewshop()"/>
+<div class="form-group" id='myform' style="display: none;">
+	<form method="post" action="/admin/pushop" enctype="multipart/form-data" name="pushop" onsubmit="return onSubPub">
+    <input type="text" class="form-control" name="shopname" placeholder="请输入营业点名称">
+	<input type="text" class="form-control" name="email" placeholder="请输入email">
+    <input type="password" class="form-control" name="pwd" placeholder="请输入密码">
+    <textarea class="form-control" rows="5" placeholder="请输入营业简介" name='shopintr'></textarea>
+    <input type="text" class="form-control" name='keywords' placeholder="请输入查询关键词">
+    <select class="form-control" name='shoptype'>
+      <option value='0'>请选择经营类别</option>
+      <option value='1'>快餐</option>
+      <option value='2'>酒吧</option>
+      <option value='3'>酒店</option>
+    </select>
+    <label for="lastname" class="col-sm-2 control-label">店铺图片</label>
+    <input type="file" id="inputfile" name='photourl'>
+         经度:<input type='text' name='lng'  id="lng" readonly>&nbsp;
+         维度:<input type='text' name='lat' id="lat" readonly>&nbsp;
+    <input type="button" class="btn btn-primary" onclick='whatmap();' value='确定地理位置'/>
+    <br/>
+    <input type="submit" class="btn btn-primary" onclick='dian();' value='提交'/>
+    </form>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <form id='sendMsgForm' name='sendMsgForm' >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">请选择您的地理位置</h4>
+            </div>
+            <div class="modal-body" style="height:500px">
+              <div id="mapContainer" style='width:100%;height:500px'></div>
+            </div>
+            <div class="modal-footer" style='text-align: center'>
+            	<button type="button" class="btn btn-primary" onclick="ture()" >确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+       </form>
+       
+    </div>
+</div>
+<script>
+	var  marker = null;
+	var a = 0;
+	var map = null;
+	function whatmap(){
+		$('#myModal').modal('show');
+	}
+	//初始化地图对象，加载地图
+    map = new AMap.Map('mapContainer', {
+		view: new AMap.View2D({
+			center: new AMap.LngLat(116.397428, 39.90923),
+			zoom: 18
+		})
+    });
+     marker = new AMap.Marker({
+	 	 clickable:true,
+		 map:map,
+		 icon:"http://webapi.amap.com/images/0.png",
+		 position:[116.397428,39.90923],
+		 offset:new AMap.Pixel(-10,-34)
+	 });
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],
+	    function(){
+	        map.addControl(new AMap.ToolBar());
+
+	        map.addControl(new AMap.Scale());
+
+	        map.addControl(new AMap.OverView({isOpen:true}));
+	});
+   
+	function eventHandler(e){
+		map.remove(marker);
+		var lng = document.getElementById('lng');
+        var lat = document.getElementById('lat');
+	     marker = new AMap.Marker({
+			 map:map,
+			 position:e.lnglat,
+			 icon:"http://webapi.amap.com/images/0.png",
+			 offset:new AMap.Pixel(-10,-34)
+		 });
+		 lngValue = e.lnglat.getLng();
+		 latValue = e.lnglat.getLat()
+	   
+		//
+	}
+
+    var listener = AMap.event.addListener(map,"click",eventHandler);
+    function ture(){
+    	$(lng).val(lngValue);
+		$(lat).val(latValue);
+    	$('#myModal').modal('hide');
+    }
+	</script>

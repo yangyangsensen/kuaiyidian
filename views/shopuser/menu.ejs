@@ -1,0 +1,88 @@
+<style>
+	.pstyle{
+		float: left;
+		height: 10px;
+		margin-left: 15px;
+		color: #6a6a6a;
+	}
+	.menutype{
+		height: 300px;
+		width: 95%;
+		margin-top:25px;
+		border-radius: 2px;
+		-webkit-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	    -moz-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	    box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	}
+	.menutype:hover{
+		-webkit-box-shadow:0 0 20px rgba(51, 122, 183, .7);  
+	    -moz-box-shadow:0 0 20px rgba(51, 122, 183, .7); 
+	    box-shadow:0 0 20px rgba(51, 122, 183, .7); 
+	}
+	.menu{
+		height: 300px;
+		width: 95%;
+        margin-top:25px;
+		border-radius: 2px;
+		-webkit-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	    -moz-box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	    box-shadow:0 0 20px rgba(131, 131, 131, .7);  
+	}
+	.menu:hover{
+		-webkit-box-shadow:0 0 20px rgba(51, 122, 183, .7);  
+	    -moz-box-shadow:0 0 20px rgba(51, 122, 183, .7); 
+	    box-shadow:0 0 20px rgba(51, 122, 183, .7); 
+	}
+	.top{
+		position: relative;
+		height: 30px;
+	}
+	.neirong{
+		width: 100%;
+		height: 260px;
+		float: left;
+	    overflow-y: auto;
+	}
+	.showtype:hover{
+		background:rgba(231, 231, 231, .5);  
+	}
+
+</style>
+<script>
+	function showMenu(type,typeid){
+		$.get('/users/showmenu',{type:type,typeid:typeid},function(rhtml){
+            $('#menu').html(rhtml);
+		});
+	}
+</script>
+	<div style="width: 20%; float: left; ">
+			<div class="top">
+			<h5 class="pstyle" >菜品类型</h5>
+			</div>
+			<div class="menutype " >
+				<div class="neirong " >
+					<% menu.forEach(function(menu){ %>
+					<div class="showtype " style="height: 30px;width: 100%; color: #6a6a6a;cursor: pointer;border-bottom: 1px solid rgba(231, 231, 231, .5) ;" onclick="showMenu('<%-menu.typename%>','<%-menu.id%>')">
+				    <p style="margin-top: 0px;"><%-menu.typename%>&nbsp;&nbsp;>></p>
+				    </div>
+				    <%})%>
+				</div>
+
+				<div style="margin-top: 15px;">
+					<form action="/users/newMenuType" method="post"> 
+						<input type="text" name='typename' placeholder='  添加新类型' style="width: 120px;float: left;border-radius: 2px; border: 1px solid #DDDDDD; height: 20px;"/>
+						<button type="submit" style="height: 20px;border: 1px solid #379aff;border-radius: 2px;background: #379aff;color: #FFFFFF;float: right;">添加</button>
+				    </form>
+				</div>
+		    </div>
+	</div>
+		
+	 </div>
+	 <div style="width: 70%; float: left;">
+	 	<div class="top">
+	 	<h5  class="pstyle">全部菜品</h5>  
+	 	</div>
+		<div class="menu" id="menu" name="menu" >
+	            显示菜单		
+		</div>
+	</div>

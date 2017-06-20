@@ -1,0 +1,27 @@
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="/javascripts/jquery-2.1.4.min.js"></script>
+   <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div  class="col-sm-12">
+	<!--<img src="" width="300px" />-->
+</div> 
+<div class="row">
+<div  class="col-sm-3 lift">
+	商店管理
+	<% rs.forEach(function(row){ %>
+	<a href="#" class="list-group-item">商店名：<%-row.shopname %></a>
+    <% }) %>
+</div> 
+<div  class="col-sm-9 " style="border: 1px solid blue; height: 100%;" >
+	<div class"new">
+		<% include ./shopManger%>
+	</div>
+</div>
+</div>
+<style>
+	.lift{
+		border: 1px solid red;
+		height: 100%;
+	}
+</style>
+
